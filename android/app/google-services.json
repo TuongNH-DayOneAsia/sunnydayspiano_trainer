@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "982652917651",
+    "project_id": "sunnydayspiano",
+    "storage_bucket": "sunnydayspiano.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982652917651:android:e2a301e959d5b91c273a66",
+        "android_client_info": {
+          "package_name": "com.sunnydays.piano"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzsFhyREeKChJ6JVmdZDlk-ezGkhxA1qI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.sunnydays.piano.app-mergeReleaseResources-57:/values-port/values-port.xml",
+            "map": [
+                {
+                    "source": "/Users/nguyenhuutuong/.gradle/caches/transforms-3/704fd8732be65e58c616a1b54487677c/transformed/appcompat-1.6.1/res/values-port/values-port.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "55",
+                        "endOffsets": "106"
+                    }
+                }
+            ]
+        }
+    ]
+}
