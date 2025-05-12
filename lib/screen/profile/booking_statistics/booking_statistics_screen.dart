@@ -263,7 +263,7 @@ class _BuildBodyV1State extends State<_BuildBodyV1> {
               height: 38.h,
               onPressed: (_) {
                 context.pop();
-                LocalStream.shared.goToScreenHistory();
+                EventBus.shared.goToScreenHistory();
               },
             ),
           ),

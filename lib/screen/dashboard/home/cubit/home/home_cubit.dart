@@ -17,9 +17,12 @@ import 'package:myutils/data/repositories/booking_repository.dart';
 import 'package:myutils/helpers/extension/string_extension.dart';
 import 'package:myutils/helpers/tools/tool_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
-class HomeCubit extends WidgetCubit<HomeState> {
 
-  HomeCubit() : super(widgetState: const HomeState(),){
+class HomeCubit extends WidgetCubit<HomeState> {
+  HomeCubit()
+      : super(
+          widgetState: const HomeState(),
+        ) {
     // loadInitialData();
   }
   final BookingRepository _bookingRepository = injector();
@@ -39,17 +42,12 @@ class HomeCubit extends WidgetCubit<HomeState> {
     }
   }
 
-
-
-
   Future<void> loadInitialData({bool? isRefresh}) async {
     remindBooking();
     newsCategories();
     menusInHome();
     contracts();
   }
-
-
 
   void handleFeatureAccess({
     required String router,
@@ -82,7 +80,8 @@ class HomeCubit extends WidgetCubit<HomeState> {
 
   Future<void> remindBooking() async {
     try {
-      var remindBooking = await fetchApi(() => _bookingRepository.remindBooking(),
+      var remindBooking = await fetchApi(
+          () => _bookingRepository.remindBooking(),
           showLoading: false);
       if (remindBooking?.statusCode == ApiStatusCode.success) {
         if (language == 'en') {
@@ -90,15 +89,14 @@ class HomeCubit extends WidgetCubit<HomeState> {
             remindBooking?.data = await _processBookingData(remindBooking.data);
           } else {
             remindBooking?.message =
-            await ToolHelper.translateText(remindBooking.message ?? '');
+                await ToolHelper.translateText(remindBooking.message ?? '');
           }
         }
       }
       emit(state.copyWith(remindBookingOutput: remindBooking));
-    }catch (e) {
+    } catch (e) {
       print('');
     }
-
   }
 
   Future<List<DataRemindBooking>> _processBookingData(
@@ -121,12 +119,10 @@ class HomeCubit extends WidgetCubit<HomeState> {
     await loadInitialData();
   }
 
-
-
   Future<void> newsCategories() async {
-    try{
+    try {
       final newsCategoriesResult = await fetchApi(
-              () => _bookingRepository.blogCategories(),
+          () => _bookingRepository.blogCategories(),
           showLoading: false);
       if (newsCategoriesResult?.statusCode == ApiStatusCode.success &&
           newsCategoriesResult?.data?.isNotEmpty == true) {
@@ -142,27 +138,25 @@ class HomeCubit extends WidgetCubit<HomeState> {
               currentTabIndex: 0),
         );
       }
-    }catch (e){
+    } catch (e) {
       print('error: $e');
     }
-
   }
 
   Future<BlogOutput?> blogs({required String slug, bool? showLoading}) async {
     try {
       final newsResult = await fetchApi(
-              () =>
-              _bookingRepository.blog(BlogInput(page: 1, limit: 10, slug: slug)),
+          () => _bookingRepository
+              .blog(BlogInput(page: 1, limit: 10, slug: slug)),
           showLoading: showLoading ?? true,
           millisecondsDelay: 1000);
       return newsResult?.statusCode == ApiStatusCode.success &&
-          newsResult?.data?.isNotEmpty == true
+              newsResult?.data?.isNotEmpty == true
           ? newsResult
           : BlogOutput(data: []);
-    }catch(e){
+    } catch (e) {
       print('error: $e');
     }
-
   }
 
   Future<void> filterBlogs(int indexTab) async {
@@ -176,9 +170,6 @@ class HomeCubit extends WidgetCubit<HomeState> {
       ),
     );
   }
-
-
-
 
   Future<void> menusInHome() async {
     try {
@@ -194,19 +185,21 @@ class HomeCubit extends WidgetCubit<HomeState> {
       print('Error: $e');
     }
   }
+
   Future<void> contracts() async {
     try {
       final results = await Future.wait([
         fetchApi(
-              () => _bookingRepository.bookingClassTypesV5({"key": "CLASS_PRACTICE"}),
+          () =>
+              _bookingRepository.bookingClassTypesV5({"key": "CLASS_PRACTICE"}),
           showLoading: false,
         ),
         fetchApi(
-              () => _bookingRepository.bookingClassTypesV5({"key": "CLASS"}),
+          () => _bookingRepository.bookingClassTypesV5({"key": "CLASS"}),
           showLoading: false,
         ),
         fetchApi(
-              () => _bookingRepository.contracts11(),
+          () => _bookingRepository.contracts11(),
           showLoading: false,
         ),
       ]);
@@ -215,18 +208,12 @@ class HomeCubit extends WidgetCubit<HomeState> {
       final classResult = results[1];
       final oneOneResult = results[2];
 
-
-
-        emit(state.copyWith(
+      emit(state.copyWith(
           practiceContract: practiceResult,
           classContract: classResult,
-          oneOneContract: oneOneResult
-        ));
-
+          oneOneContract: oneOneResult));
     } catch (e) {
       print('Error: $e');
     }
   }
-
-
 }

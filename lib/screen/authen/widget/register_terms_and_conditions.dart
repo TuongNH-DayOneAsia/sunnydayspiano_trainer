@@ -69,7 +69,7 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
         );
       },
       child: StreamBuilder<String>(
-          stream: LocalStream.shared.localeStream,
+          stream: EventBus.shared.localeStream,
           builder: (context, snapshot) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),

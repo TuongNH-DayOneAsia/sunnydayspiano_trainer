@@ -191,7 +191,6 @@ class BookingSelectBranchWidget extends StatelessWidget {
                 style: TextStyle(
                   color: dataSelected?.name == null ? MyColors.lightGrayColor : MyColors.darkGrayColor,
                   fontSize: 14.sp,
-                  fontFamily: 'Be Vietnam Pro',
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -213,7 +212,6 @@ class BookingSelectBranchWidget extends StatelessWidget {
           style: TextStyle(
             color: dataSelected?.name == null ? MyColors.lightGrayColor : MyColors.darkGrayColor,
             fontSize: 14.sp,
-            fontFamily: 'Be Vietnam Pro',
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -225,7 +223,6 @@ class BookingSelectBranchWidget extends StatelessWidget {
             style: TextStyle(
               color: Colors.red,
               fontSize: 10.sp,
-              fontFamily: 'Be Vietnam Pro',
             ),
           ),
         ]

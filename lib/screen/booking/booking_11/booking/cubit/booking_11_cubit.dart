@@ -68,23 +68,23 @@ class Booking11Cubit extends WidgetCubit<Booking11State> {
           showLoading: true);
       if (bookingResult?.statusCode == ApiStatusCode.success) {
         final data = bookingResult?.data;
-        LocalStream.shared.handleAction(RefreshAction.refreshBooking11List);
+        EventBus.shared.handleAction(RefreshAction.refreshBooking11List);
         onBookingSuccess(data);
         // hideEasyLoading();
       } else if (bookingResult?.statusCode == ApiStatusCode.blockBooking) {
         onBookingBlock(bookingResult?.message ?? '');
         // hideEasyLoading();
       } else {
-        LocalStream.shared.refreshBooking11List();
+        EventBus.shared.refreshBooking11List();
         final message = language == 'en'
             ? await ToolHelper.translateText(bookingResult?.message ?? '')
             : bookingResult?.message ?? '';
-        LocalStream.shared.refreshDataInHome();
+        EventBus.shared.refreshDataInHome();
         onBookingError(message);
         // hideEasyLoading();
       }
     } catch (e) {
-      LocalStream.shared.refreshDataInHome();
+      EventBus.shared.refreshDataInHome();
       onBookingError(e.toString());
       // emit(state.copyWith(loading: false, error: e.toString()));
     }
@@ -121,7 +121,7 @@ class Booking11Cubit extends WidgetCubit<Booking11State> {
     try {
       final data = {
         'key': this.data?.key ?? '',
-        // 'slug_contract': dataSelected?.slugContract ?? '',
+        'slug_contract': this.data?.slugContract ?? '',
       };
       final results = await fetchApi(() => _bookingRepository.branchesV2(data), showLoading: false);
 

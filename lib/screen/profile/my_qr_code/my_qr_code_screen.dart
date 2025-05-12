@@ -260,7 +260,6 @@ class InfoCard extends StatelessWidget {
             style: TextStyle(
               color: const Color(0xFF3B3B3B),
               fontSize: 12.sp,
-              fontFamily: 'Be Vietnam Pro',
               fontWeight: FontWeight.w400,
             ),
           ),
@@ -269,7 +268,6 @@ class InfoCard extends StatelessWidget {
             style: TextStyle(
               color: const Color(0xFF6A6A6A),
               fontSize: 12.sp,
-              fontFamily: 'Be Vietnam Pro',
               fontWeight: FontWeight.w400,
             ),
           ),

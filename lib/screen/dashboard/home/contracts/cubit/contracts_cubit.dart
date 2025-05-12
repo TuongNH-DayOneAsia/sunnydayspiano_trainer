@@ -15,14 +15,14 @@ class ContractsCubit extends WidgetCubit<ContractsState> {
   ContractsCubit() : super(widgetState: const ContractsState());
   final BookingRepository _bookingRepository = injector();
 
-
-  bool hideTotalLearned(){
-    final data = localeManager.loadSavedObject(StorageKeys.apiKeyPrivate, DataKeyPrivate.fromJson);
-    final firebaseConfig = FirebaseConfigData.fromJson(json.decode(data?.isDeploy ?? '{}'));
+  bool hideTotalLearned() {
+    final data = localeManager.loadSavedObject(
+        StorageKeys.apiKeyPrivate, DataKeyPrivate.fromJson);
+    final firebaseConfig =
+        FirebaseConfigData.fromJson(json.decode(data?.isDeploy ?? '{}'));
     return firebaseConfig.hideTotalLearned ?? false;
   }
-  @override
-  void onWidgetCreated() {
-  }
 
+  @override
+  void onWidgetCreated() {}
 }

@@ -30,7 +30,7 @@ class BaseStatefulScreenV2State<T extends BaseStatefulScreenV2> extends State<T>
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<String>(
-      stream: LocalStream.shared.localeStream,
+      stream: EventBus.shared.localeStream,
       builder: (context, snapshot) {
         return Scaffold(
           backgroundColor: widget.backgroundColor,

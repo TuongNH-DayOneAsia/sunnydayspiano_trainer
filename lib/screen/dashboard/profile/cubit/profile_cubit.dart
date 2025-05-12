@@ -48,7 +48,7 @@ class ProfileCubit extends WidgetCubit<ProfileState> {
       final request = await fetchApi(() => authenRepository.logout(data));
       if (request?.statusCode == ApiStatusCode.success) {
         localeManager.clearDataLocalLogout();
-        LocalStream.shared.setLoggedIn(false);
+        EventBus.shared.setLoggedIn(false);
         // await HydratedBloc.storage.clear();
         onSuccess?.call();
       } else {
@@ -69,7 +69,7 @@ class ProfileCubit extends WidgetCubit<ProfileState> {
           .appDeleteAccount(mainCubit.state.userOutput?.data?.slug ?? ''));
       if (request?.statusCode == ApiStatusCode.success) {
         localeManager.clearDataLocalLogout();
-        LocalStream.shared.setLoggedIn(false);
+        EventBus.shared.setLoggedIn(false);
 
         onSuccess.call();
       } else {

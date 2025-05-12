@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myutils/data/network/model/output/list_products_output.dart';
+import 'package:myutils/data/network/model/output/menus_in_home_output.dart';
 import 'package:myutils/utils/dimens.dart';
 import 'package:myutils/utils/popup/my_popup_message.dart';
 import '../cubit/home/home_cubit.dart';
@@ -70,124 +71,137 @@ class _MenuBookingWidgetState extends State<MenuBookingWidget> {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
         return BookingClassTypesV3Screen(
-          onPressedBookingClass: _handleBookingClass,
-          onPressedBookingRoom: _handleBookingRoom,
           onPressedItem: (data) {
-            if (data.isBooking == true) {
-              final mainCubit = contextHomeCubit.read<MainCubit>();
-              final userData = mainCubit.state.userOutput?.data;
-              if (data.key == 'CLASS_PRACTICE' || data.key == 'CLASS') {
-                if (userData?.isActive == true) {
-                  // Handle active user scenarios
-                  if (data.key == 'CLASS_PRACTICE') {
-                    contextHomeCubit.read<HomeCubit>().handleFeatureAccess(
-                          userData: userData,
-                          router: data.router ?? BookingClassListScreen.route,
-                          key: data.key,
-                          isBooking: data.isBooking ?? false,
-                          showPopup: (title, description) => _showPopupHtml(
-                            title: title,
-                            context: contextHomeCubit,
-                            description: description,
-                          ),
-                          navigateTo: (route, extra) async {
-                            context
-                                .push(route, extra: extra)
-                                .then(_handleBookingResult);
-                          },
-                        );
-                  } else if (data.key == "CLASS") {
-                    // Skip processing if no items
-                    if (state.classContract?.data?.items == null ||
-                        state.classContract?.data?.items?.isEmpty == true) {
-                      return;
-                    }
-                    // Direct booking if only one item exists and isBooking is true
-                    if (state.classContract?.data?.items?.length == 1 &&
-                        state.classContract?.data?.items?.first.isBooking ==
-                            true) {
-                      contextHomeCubit.read<HomeCubit>().handleFeatureAccess(
-                            userData: userData,
-                            router: data.router ?? BookingClassListScreen.route,
-                            key: data.key,
-                            isBooking: data.isBooking ?? false,
-                            showPopup: (title, description) => _showPopupHtml(
-                              title: title,
-                              context: contextHomeCubit,
-                              description: description,
-                            ),
-                            navigateTo: (route, extra) async {
-                              context
-                                  .push(route,
-                                      extra: state
-                                          .classContract?.data?.items?.first)
-                                  .then(_handleBookingResult);
-                            },
-                          );
-                      return;
-                    }
-                    context.push(ContractsScreen.route, extra: {
-                      'title': 'Chọn hợp đồng lớp Nhóm',
-                      'data': state.classContract?.data,
-                      'message_empty': state.classContract?.data?.messages ?? ''
-                    });
-                  }
-                } else {
-                  if(state.practiceContract?.data == null || state.practiceContract?.data?.items?.isEmpty == true){
-                    _showPopupHtml(
-                      title: 'Chưa có thông tin',
-                      context: context,
-                      description: data.key == 'CLASS_PRACTICE' ? state.practiceContract?.data?.messages ?? 'Vui lòng liên hệ VH để được hỗ trợ' : state.classContract?.data?.messages ?? 'Vui lòng liên hệ VH để được hỗ trợ',
-                    );
-                    return;
-                  }
-
-
-
-                  // Handle inactive user - show contracts screen
-                  context.push(ContractsScreen.route, extra: {
-                    'title': data.key == 'CLASS_PRACTICE'
-                        ? 'Chọn hợp đồng luyện đàn'
-                        : 'Chọn hợp đồng lớp Nhóm',
-                    'data': data.key == 'CLASS_PRACTICE'
-                        ? state.practiceContract?.data
-                        : state.classContract?.data,
-                    'message_empty': data.key == 'CLASS_PRACTICE'
-                        ? state.practiceContract?.data?.messages ?? ''
-                        : state.classContract?.data?.messages ?? '',
-                  });
-                }
-              } else {
-                if(state.oneOneContract?.data == null){
-                  _showPopupHtml(
-                    title: 'Chưa có thông tin',
-                    context: context,
-                    description: data.key == 'CLASS_PRACTICE' ? state.practiceContract?.data?.messages ?? 'Vui lòng liên hệ VH để được hỗ trợ' : state.classContract?.data?.messages ?? 'Vui lòng liên hệ VH để được hỗ trợ',
-                  );
-                  return;
-                }
-                // Handle other booking types (1:1)
-                context.push(ContractsScreen.route, extra: {
-                  'title': 'Chọn hợp đồng lớp 1:1',
-                  'data': state.oneOneContract?.data,
-                  'message_empty': state.oneOneContract?.data?.messages ?? ''
-                });
-              }
-            } else {
-              _showPopupHtml(
-                title: data.textBlockBooking?.isNotEmpty == true
-                    ? data.textBlockBooking ?? ''
-                    : 'bookingClass.confirmBooking'.tr(),
-                context: context,
-                description: data.message?.isNotEmpty == true
-                    ? data.message ?? ''
-                    : 'bookingClass.confirmBooking'.tr(),
-              );
-            }
+            _onPressedItem(
+                data: data, contextHomeCubit: contextHomeCubit, state: state);
           },
         );
       },
     );
+  }
+
+  _onPressedItem(
+      {required DataMenuV3 data,
+      required BuildContext contextHomeCubit,
+      required HomeState state}) {
+    if (data.isBooking == true) {
+      final mainCubit = contextHomeCubit.read<MainCubit>();
+      final userData = mainCubit.state.userOutput?.data;
+      if (data.key == 'CLASS_PRACTICE' || data.key == 'CLASS') {
+        if (userData?.isActive == true) {
+          if (data.key == 'CLASS_PRACTICE') {
+            contextHomeCubit.read<HomeCubit>().handleFeatureAccess(
+                  userData: userData,
+                  router: data.router ?? BookingClassListScreen.route,
+                  key: data.key,
+                  isBooking: data.isBooking ?? false,
+                  showPopup: (title, description) => _showPopupHtml(
+                    title: title,
+                    context: contextHomeCubit,
+                    description: description,
+                  ),
+                  navigateTo: (route, extra) async {
+                    context.push(route, extra: data).then(_handleBookingResult);
+                  },
+                );
+          } else if (data.key == "CLASS") {
+            if (state.classContract?.data?.items == null ||
+                state.classContract?.data?.items?.isEmpty == true) {
+              return;
+            }
+            if (state.classContract?.data?.items?.length == 1 &&
+                state.classContract?.data?.items?.first.isBooking == true) {
+              contextHomeCubit.read<HomeCubit>().handleFeatureAccess(
+                    userData: userData,
+                    router: data.router ?? BookingClassListScreen.route,
+                    key: data.key,
+                    isBooking: data.isBooking ?? false,
+                    showPopup: (title, description) => _showPopupHtml(
+                      title: title,
+                      context: contextHomeCubit,
+                      description: description,
+                    ),
+                    navigateTo: (route, extra) async {
+                      if (state.classContract?.data?.items?.first != null) {
+                        context
+                            .push(route,
+                                extra: state.classContract?.data?.items?.first)
+                            .then(_handleBookingResult);
+                      }
+                    },
+                  );
+              return;
+            }
+            context.push(ContractsScreen.route, extra: {
+              'title': 'Chọn hợp đồng lớp Nhóm',
+              'data': state.classContract?.data,
+              'message_empty': state.classContract?.data?.messages ?? ''
+            });
+          }
+        } else {
+          if (state.practiceContract?.data == null ||
+              state.practiceContract?.data?.items?.isEmpty == true) {
+            _showPopupHtml(
+              title: 'Chưa có thông tin',
+              context: context,
+              description: data.key == 'CLASS_PRACTICE'
+                  ? state.practiceContract?.data?.messages ??
+                      'Vui lòng liên hệ VH để được hỗ trợ'
+                  : state.classContract?.data?.messages ??
+                      'Vui lòng liên hệ VH để được hỗ trợ',
+            );
+            return;
+          }
+          context.push(
+            ContractsScreen.route,
+            extra: {
+              'title': data.key == 'CLASS_PRACTICE'
+                  ? 'Chọn hợp đồng luyện đàn'
+                  : 'Chọn hợp đồng lớp Nhóm',
+              'data': data.key == 'CLASS_PRACTICE'
+                  ? state.practiceContract?.data
+                  : state.classContract?.data,
+              'message_empty': data.key == 'CLASS_PRACTICE'
+                  ? state.practiceContract?.data != null
+                      ? state.practiceContract?.data?.messages ?? ''
+                      : state.practiceContract?.message ?? ''
+                  : state.classContract?.data != null
+                      ? state.classContract?.data?.messages ?? ''
+                      : state.classContract?.message ?? '',
+            },
+          );
+        }
+      } else {
+        if (state.oneOneContract?.data == null) {
+          _showPopupHtml(
+            title: 'Chưa có thông tin',
+            context: context,
+            description: data.key == 'CLASS_PRACTICE'
+                ? state.practiceContract?.data?.messages ??
+                    'Vui lòng liên hệ VH để được hỗ trợ'
+                : state.classContract?.data?.messages ??
+                    'Vui lòng liên hệ VH để được hỗ trợ',
+          );
+          return;
+        }
+        // Handle other booking types (1:1)
+        context.push(ContractsScreen.route, extra: {
+          'title': 'Chọn hợp đồng lớp 1:1',
+          'data': state.oneOneContract?.data,
+          'message_empty': state.oneOneContract?.data?.messages ?? ''
+        });
+      }
+    } else {
+      _showPopupHtml(
+        title: data.textBlockBooking?.isNotEmpty == true
+            ? data.textBlockBooking ?? ''
+            : 'bookingClass.confirmBooking'.tr(),
+        context: context,
+        description: data.message?.isNotEmpty == true
+            ? data.message ?? ''
+            : 'bookingClass.confirmBooking'.tr(),
+      );
+    }
   }
 
   void _showPopupHtml({

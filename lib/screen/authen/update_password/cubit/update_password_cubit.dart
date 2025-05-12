@@ -74,7 +74,7 @@ class UpdatePasswordCubit extends WidgetCubit<UpdatePasswordState> {
       final request = await fetchApi(() => authenRepository.logout(data));
       if (request?.statusCode == ApiStatusCode.success) {
         localeManager.clearDataLocalLogout();
-        LocalStream.shared.setLoggedIn(false);
+        EventBus.shared.setLoggedIn(false);
         print('logout success');
         // clearCacheGoToLogin();
       } else {

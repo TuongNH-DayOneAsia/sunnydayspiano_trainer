@@ -1,5 +1,6 @@
 import 'package:dayoneasia/screen/booking/booking_class/class_list/widget/booking_select_branch_widget.dart';
 import 'package:dayoneasia/screen/booking/booking_practice/practice_detail/booking_practice_detail_screen.dart';
+import 'package:dayoneasia/screen/booking/booking_practice/practice_list/widget/booking_durations_widget.dart';
 import 'package:dayoneasia/screen/booking/booking_practice/practice_list/widget/booking_list_piano_widget.dart';
 import 'package:dayoneasia/screen/booking/booking_practice/practice_list/widget/booking_pick_time_widget.dart';
 import 'package:dayoneasia/screen/booking/booking_practice/practice_list/widget/booking_seat_selection_legend_widget.dart';
@@ -13,6 +14,7 @@ import 'package:go_router/go_router.dart';
 import 'package:myutils/config/local_stream.dart';
 import 'package:myutils/data/network/model/output/booking_output.dart';
 import 'package:myutils/data/network/model/output/currrent_week_output.dart';
+import 'package:myutils/data/network/model/output/menus_in_home_output.dart';
 import 'package:myutils/helpers/extension/colors_extension.dart';
 import 'package:myutils/helpers/extension/image_extension.dart';
 import 'package:myutils/utils/dimens.dart';
@@ -24,12 +26,12 @@ import 'package:myutils/utils/widgets/my_button.dart';
 import 'cubit/booking_practice_list_cubit.dart';
 
 class BookingPracticeListScreen extends BaseStatelessScreenV2 {
-  final String? keyType;
+  final DataMenuV3? data;
   static const String route = '/booking-practice';
 
   const BookingPracticeListScreen({
     super.key,
-    this.keyType,
+    this.data,
   });
 
   @override
@@ -44,7 +46,7 @@ class BookingPracticeListScreen extends BaseStatelessScreenV2 {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => BookingPracticeListCubit(keyType: keyType)
+      create: (context) => BookingPracticeListCubit(data: data)
         ..loadInitialData()
         ..callApiBannerClass(),
       child: super.build(context),
@@ -80,7 +82,7 @@ class _BodyWidgetState extends State<_BodyWidget> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    LocalStream.shared.refreshPracticeList = () {
+    EventBus.shared.refreshPracticeList = () {
       context
           .read<BookingPracticeListCubit>()
           .listPiano(widget.state.listBookingInput.startTime ?? '');
@@ -158,7 +160,7 @@ class _BodyWidgetState extends State<_BodyWidget> {
   }
 
   Widget _buildDurations() {
-    return const _DurationsWidget();
+    return const BookingDurationsWidget();
   }
 
   Widget _buildSeatSelectionLegend() {
@@ -309,10 +311,6 @@ class _BodyWidgetState extends State<_BodyWidget> {
   }
 
   void _showBookingConfirmation(BuildContext context) {
-    if (kDebugMode) {
-      print(
-          ' context.read<PracticeListCubit>().state ${context.read<BookingPracticeListCubit>().state.listBookingInput.toJsonBookPractice()}');
-    }
     MyPopupMessage.confirmPopUp(
         cancelText: 'bookingClass.goBack'.tr(),
         cancelColor: MyColors.lightGrayColor2,
@@ -398,113 +396,7 @@ class _BodyWidgetState extends State<_BodyWidget> {
   }
 }
 
-class _DurationsWidget extends StatefulWidget {
-  const _DurationsWidget();
 
-  @override
-  _DurationsWidgetState createState() => _DurationsWidgetState();
-}
-
-class _DurationsWidgetState extends State<_DurationsWidget> {
-  num? selectedDuration;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<BookingPracticeListCubit, BookingPracticeListState>(
-      builder: (context, state) {
-        final durations = state.durationsOutput?.data ?? [30, 60, 90];
-        if (selectedDuration == null && durations.isNotEmpty) {
-          selectedDuration = num.parse(state.listBookingInput.duration ?? '90');
-        }
-        return Card(
-          margin: EdgeInsets.symmetric(horizontal: 16.w),
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8))),
-          elevation: 0,
-          child: Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 30.0.w, vertical: 16.0.w),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Text('bookingClass.selectDuration'.tr(), style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400)),
-                // SizedBox(
-                //   height: 10.h,
-                // ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   children: durations.map((duration) => _buildDurationItem(duration, state)).toList(),
-                // ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.hourglass_empty,
-                      color: MyColors.darkGrayColor,
-                    ),
-                    SizedBox(
-                      width: 14.w,
-                    ),
-                    Text(
-                      'bookingClass.selectDuration'.tr(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: MyColors.darkGrayColor,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                const CustomSlider(),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildDurationItem(num duration, BookingPracticeListState state) {
-    bool isSelected = duration == selectedDuration;
-
-    return InkWell(
-      onTap: () {
-        setState(() {
-          selectedDuration = duration;
-        });
-        context
-            .read<BookingPracticeListCubit>()
-            .emitDurationSelected(selectedDuration.toString());
-      },
-      child: Row(
-        children: [
-          Icon(
-            isSelected
-                ? Icons.radio_button_checked
-                : Icons.radio_button_unchecked,
-            color: MyColors.mainColor,
-            // color: isSelected ? Colors.white : MyColors.mainColor,
-            size: 16.sp,
-          ),
-          SizedBox(width: 5.w),
-          Text(
-            '$duration ${'bookingClass.minutes'.tr()}',
-            style: TextStyle(
-              // color: isSelected ? Colors.white : MyColors.mainColor,
-              fontSize: 12.sp,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 class CustomSlider extends StatefulWidget {
   const CustomSlider({super.key});

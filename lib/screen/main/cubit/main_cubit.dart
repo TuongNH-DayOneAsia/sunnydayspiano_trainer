@@ -53,7 +53,7 @@ class MainCubit extends WidgetCubit<MainState> {
     if (slug.isEmpty || accessToken.isEmpty || apiKeyPrivate.isEmpty) {
       clearCacheGoToLogin();
     } else {
-      LocalStream.shared.setLoggedIn(true);
+      EventBus.shared.setLoggedIn(true);
     }
   }
 }

@@ -23,7 +23,7 @@ part 'notifications_state.dart';
 
 class NotificationsCubit extends WidgetCubit<NotificationsState> {
   NotificationsCubit() : super(widgetState: const NotificationsState()) {
-    LocalStream.shared.handleSlugCallback = (String slug) {
+    EventBus.shared.handleSlugCallback = (String slug) {
       refreshNotificationsWithDebounce();
     };
   }
@@ -102,7 +102,7 @@ class NotificationsCubit extends WidgetCubit<NotificationsState> {
     seenNotification(
         slug: 'all',
         onSuccess: () {
-          LocalStream.shared.refreshApiProfile();
+          EventBus.shared.refreshApiProfile();
 
           _notificationsInput = NotificationsInput(page: 1, limit: 10);
           _fetchNotifications(showLoading: true, millisecondsDelay: 1000).then((value) {

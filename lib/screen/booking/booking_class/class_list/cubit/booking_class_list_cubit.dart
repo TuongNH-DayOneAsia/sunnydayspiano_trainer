@@ -39,7 +39,7 @@ class BookingClassListCubit extends WidgetCubit<BookingClassListState> {
   }
 
   Future<void> refreshListClass() async {
-    LocalStream.shared.refreshClassList = () {
+    EventBus.shared.refreshClassList = () {
       filter(showLoading: false);
     };
   }
@@ -47,7 +47,7 @@ class BookingClassListCubit extends WidgetCubit<BookingClassListState> {
   String textEmpty() {
     final branches = state.branchesOutput?.data ?? [];
     const defaultMessage = 'Chưa có thông tin chi nhánh!';
-    if (branches.isNotEmpty == true ||
+    if (branches.isNotEmpty == true &&
         (branches.length == 1 && branches.first.haveRoom == false)) {
       return branches.first.message ?? defaultMessage;
     }
@@ -141,73 +141,11 @@ class BookingClassListCubit extends WidgetCubit<BookingClassListState> {
     }
   }
 
-  Future<void> loadInitialData() async {
-    print('textRequestClassLesson: $textRequestClassLesson');
-    emit(state.copyWith(isInitialLoading: true));
-    try {
-      final data = {
-        'key': this.data?.key ?? 'CLASS',
-      };
-      final branchesResult = await fetchApi(
-          () => _bookingRepository.branchesV2(data),
-          showLoading: false);
-      final currentWeekResult = await fetchApi(
-          () => _bookingRepository.currentWeek(data),
-          showLoading: false);
-      if (_isValidInitialData(branchesResult, currentWeekResult)) {
-        int? selectedBranchId;
-        if (branchesResult?.data?.length == 1) {
-          selectedBranchId = branchesResult?.data?.first.id;
-        }
-        _listBookingInput = _listBookingInput.copyWith(
-          branchId: selectedBranchId,
-          classStartDate: currentWeekResult?.data?.first.fullDate ?? '',
-        );
-        ListClassOutput? listBookingResult;
-        if (branchesResult?.data?.length == 1) {
-          listBookingResult = await _fetchListBooking(
-            showLoading: false,
-            isInitialFetch: true,
-          );
-        } else {
-          listBookingResult = ListClassOutput(listClass: []);
-        }
-        _processLanguageSpecificData(branchesResult, currentWeekResult);
-
-        emit(state.copyWith(
-          branchesOutput: branchesResult,
-          currentWeek: currentWeekResult?.data,
-          isLoading: false,
-          isInitialLoading: false,
-          dataBranchSelected:
-              selectedBranchId != null ? branchesResult?.data?.first : null,
-          listBookingOutput: listBookingResult,
-        ));
-      } else {
-        String error = MyString.messageError;
-
-        if (branchesResult?.statusCode != ApiStatusCode.success ||
-            currentWeekResult?.statusCode != ApiStatusCode.success) {
-          error = [
-            if (branchesResult?.statusCode != ApiStatusCode.success)
-              branchesResult?.message,
-            if (currentWeekResult?.statusCode != ApiStatusCode.success)
-              currentWeekResult?.message,
-          ].where((msg) => msg != null).join(', ');
-        }
-
-        error = error.isNotEmpty ? error : MyString.messageError;
-        _emitError(error);
-      }
-    } catch (e) {
-      _emitError(isDebug ? e.toString() : MyString.messageError);
-    }
-  }
 
   Future<void> loadInitialDataV2() async {
     emit(state.copyWith(isInitialLoading: true));
     try {
-      final data = {'key': this.data?.key ?? 'CLASS'};
+      final data = {'key': this.data?.key ?? 'CLASS', 'slug_contract': this.data?.slugContract ?? ''};
       final results = await _fetchInitialData(data);
       final (branchesResult, currentWeekResult) = results;
 

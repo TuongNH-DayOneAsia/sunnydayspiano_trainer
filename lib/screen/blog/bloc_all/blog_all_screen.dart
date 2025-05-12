@@ -294,7 +294,6 @@ class ItemPromotionWidget extends StatelessWidget {
               style: TextStyle(
                 color: const Color(0xFF2A2A2A),
                 fontSize: 14.sp,
-                fontFamily: 'Be Vietnam Pro',
                 fontWeight: FontWeight.w500,
                 height: 0,
               ),
@@ -309,7 +308,6 @@ class ItemPromotionWidget extends StatelessWidget {
               style: TextStyle(
                 color: const Color(0xFF3B3B3B),
                 fontSize: 12.sp,
-                fontFamily: 'Be Vietnam Pro',
                 fontWeight: FontWeight.w400,
                 height: 1.2,
               ),

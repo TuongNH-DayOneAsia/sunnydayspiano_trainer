@@ -413,7 +413,6 @@ class ClassCardV2 extends StatelessWidget {
                 style: TextStyle(
                   color: textColor,
                   fontSize: 10.sp,
-                  fontFamily: 'Be Vietnam Pro',
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -713,7 +712,6 @@ class ClassCardV3 extends StatelessWidget {
                 style: TextStyle(
                   color: textColor,
                   fontSize: 10.sp,
-                  fontFamily: 'Be Vietnam Pro',
                   fontWeight: FontWeight.w500,
                 ),
               ),

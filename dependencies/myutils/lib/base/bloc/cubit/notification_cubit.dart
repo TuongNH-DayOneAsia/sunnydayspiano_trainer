@@ -151,15 +151,15 @@ class NotificationCubit extends Cubit<NotificationState> {
         final data = message.data;
         final bool isBlock = data['is_block'] ?? false;
         if (isBlock) {
-          LocalStream.shared.handleAction(RefreshAction.refreshDataInHome);
+          EventBus.shared.handleAction(RefreshAction.refreshDataInHome);
         } else {
-          LocalStream.shared.refreshApiProfile();
+          EventBus.shared.refreshApiProfile();
         }
       } catch (e) {
         print('error: $e');
       }
       if (currentRoute() == NotificationScreen.route) {
-        LocalStream.shared.handleSlugCallback('');
+        EventBus.shared.handleSlugCallback('');
       }
     });
   }
@@ -326,10 +326,10 @@ class NotificationCubit extends Cubit<NotificationState> {
         };
       }
 
-      if (_isValidBookingPath(path)) {
-        final String keyType = data['booking_key_type'] ?? 'default_code';
-        extraParams = keyType;
-      }
+      // if (_isValidBookingPath(path)) {
+      //   final String keyType = data['booking_key_type'] ?? 'default_code';
+      //   extraParams = keyType;
+      // }
 
       // Handle navigation based on path
       _handleScreenNavigation(path: path, extraParams: extraParams);
@@ -384,9 +384,9 @@ class NotificationCubit extends Cubit<NotificationState> {
           .then((result) {
         if (result.statusCode == ApiStatusCode.success) {
           if (NotificationScreen.route == currentRoute()) {
-            LocalStream.shared.handleSlugCallback(slug);
+            EventBus.shared.handleSlugCallback(slug);
           }
-          LocalStream.shared.refreshApiProfile();
+          EventBus.shared.refreshApiProfile();
           if (kDebugMode) {
             print('Seen notification success');
           }

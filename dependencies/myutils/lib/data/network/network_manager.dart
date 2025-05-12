@@ -461,7 +461,7 @@ class NetworkManager {
     await _localeManager?.clearDataLocalLogout();
     // myRouter.go(WelcomeScreen.route);
     myRouter.go(LoginScreen.route);
-    LocalStream.shared.setLoggedIn(false);
+    EventBus.shared.setLoggedIn(false);
   }
 
   void _executePendingRequest() {

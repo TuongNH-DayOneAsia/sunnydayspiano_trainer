@@ -34,7 +34,7 @@ showSelectLanguage({required BuildContext pageContext, VoidCallback? reloadLangu
                     Locale.fromSubtags(languageCode: code),
                   );
                   localeManager.setStringValue(StorageKeys.cachedLang, code);
-                  LocalStream.shared.setLocale(code);
+                  EventBus.shared.setLocale(code);
                   MyPopupMessage.showPopUpWithIcon(
                     title: 'profile.changeLanguageSuccess'.tr(),
                     context: pageContext,

@@ -22,7 +22,7 @@ class _TimeGridViewStateV2 extends State<TimeGridViewV2> {
   @override
   void initState() {
     super.initState();
-    LocalStream.shared.refreshBooking11List = () {
+    EventBus.shared.refreshBooking11List = () {
       context.read<Booking11Cubit>().emitDataCalendarSelected();
     };
   }

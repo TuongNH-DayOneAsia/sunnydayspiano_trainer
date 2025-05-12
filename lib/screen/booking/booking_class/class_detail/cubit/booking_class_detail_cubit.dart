@@ -144,7 +144,7 @@ class BookingClassDetailCubit extends WidgetCubit<BookingClassDetailState> {
         if (language == 'en') {
           await _translateBookingData(data);
         }
-        LocalStream.shared.handleAction(RefreshAction.refreshClassList);
+        EventBus.shared.handleAction(RefreshAction.refreshClassList);
         onBookingSuccess(data);
         hideEasyLoading();
       } else if (bookingResult?.statusCode == ApiStatusCode.blockBooking) {
@@ -196,12 +196,12 @@ class BookingClassDetailCubit extends WidgetCubit<BookingClassDetailState> {
         bookingResult?.message = await ToolHelper.translateText(bookingResult.message ?? '');
       }
       if (bookingResult?.statusCode == ApiStatusCode.success) {
-        LocalStream.shared.handleAction(refreshAction);
+        EventBus.shared.handleAction(refreshAction);
         onSuccess();
       } else if (bookingResult?.statusCode == ApiStatusCode.blockBooking) {
         onBookingBlock(bookingResult?.message ?? '');
         callApiClassDetail();
-        LocalStream.shared.handleAction(refreshAction);
+        EventBus.shared.handleAction(refreshAction);
       } else {
         onError(bookingResult?.message ?? '');
       }

@@ -10,25 +10,16 @@ import 'package:myutils/helpers/extension/icon_extension.dart';
 import 'package:myutils/helpers/extension/string_extension.dart';
 import 'package:shimmer/shimmer.dart';
 
-
-
 class BookingClassTypesV3Screen extends StatelessWidget {
-  final Function() onPressedBookingClass;
-  final Function() onPressedBookingRoom;
   final Function(DataMenuV3 data) onPressedItem;
 
-  const BookingClassTypesV3Screen(
-      {super.key,
-      required this.onPressedBookingClass,
-      required this.onPressedBookingRoom,
-      required this.onPressedItem});
+  const BookingClassTypesV3Screen({super.key, required this.onPressedItem});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
-        final listBookingClassTypes =
-            state.menusInHome?.data?.arrayMenu ?? [];
+        final listBookingClassTypes = state.menusInHome?.data?.arrayMenu ?? [];
 
         // Show shimmer loading when data is loading or empty
         if (listBookingClassTypes.isEmpty) {
@@ -72,7 +63,6 @@ class BookingClassTypesV3Screen extends StatelessWidget {
             }).toList(),
           ),
         );
-
       },
     );
   }

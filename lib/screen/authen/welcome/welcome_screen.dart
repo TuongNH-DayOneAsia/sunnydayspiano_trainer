@@ -53,7 +53,7 @@ class WelcomeScreen extends StatelessWidget {
                           final newLang = currentLang == 'vi' ? 'en' : 'vi';
                           context.setLocale(Locale(newLang));
                           context.read<WelcomeCubit>().localeManager.setStringValue(StorageKeys.cachedLang, newLang);
-                          LocalStream.shared.setLocale(newLang);
+                          EventBus.shared.setLocale(newLang);
                           MyPopupMessage.showPopUpWithIcon(
                             title: 'profile.changeLanguageSuccess'.tr(),
                             context: context,

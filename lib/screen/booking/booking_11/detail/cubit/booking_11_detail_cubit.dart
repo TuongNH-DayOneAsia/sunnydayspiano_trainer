@@ -68,10 +68,10 @@ class Booking11DetailCubit extends WidgetCubit<Booking11DetailState> {
         showLoading: true,
       );
       if (bookingResult?.statusCode == ApiStatusCode.success) {
-        LocalStream.shared.handleAction(refreshAction);
+        EventBus.shared.handleAction(refreshAction);
         onSuccess();
       } else if (bookingResult?.statusCode == ApiStatusCode.blockBooking) {
-        LocalStream.shared.handleAction(refreshAction);
+        EventBus.shared.handleAction(refreshAction);
         onBookingBlock(bookingResult?.message ?? '');
         getDetailBooking11();
       } else {
@@ -159,14 +159,14 @@ class Booking11DetailCubit extends WidgetCubit<Booking11DetailState> {
         // if (language == 'en') {
         //   await _translateBookingData(data);
         // }
-        LocalStream.shared.handleAction(RefreshAction.refreshBooking11List);
+        EventBus.shared.handleAction(RefreshAction.refreshBooking11List);
         onBookingSuccess(data);
         // hideEasyLoading();
       } else if (bookingResult?.statusCode == ApiStatusCode.blockBooking) {
         onBookingBlock(bookingResult?.message ?? '');
         // hideEasyLoading();
       } else {
-        LocalStream.shared.refreshBooking11List();
+        EventBus.shared.refreshBooking11List();
         final message = language == 'en'
             ? await ToolHelper.translateText(bookingResult?.message ?? '')
             : bookingResult?.message ?? '';

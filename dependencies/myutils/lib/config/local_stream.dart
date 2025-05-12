@@ -11,10 +11,10 @@ enum RefreshAction {
   refreshBooking11List
 }
 
-class LocalStream {
-  LocalStream._() {}
+class EventBus {
+  EventBus._() {}
 
-  static final shared = LocalStream._();
+  static final shared = EventBus._();
   final isLoggedInStream = BehaviorSubject<bool>.seeded(false);
   final localeStream = BehaviorSubject<String>.seeded('vi');
 

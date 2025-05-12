@@ -8,6 +8,7 @@ import 'package:myutils/config/injection.dart';
 import 'package:myutils/config/local_stream.dart';
 import 'package:myutils/constants/api_constant.dart';
 import 'package:myutils/constants/locale_keys_enum.dart';
+import 'package:myutils/data/network/model/input/api_key_input.dart';
 import 'package:myutils/data/network/model/output/api_key_output.dart';
 import 'package:myutils/data/repositories/authen_repository.dart';
 import 'package:myutils/helpers/extension/string_extension.dart';
@@ -96,7 +97,7 @@ class LoginCubit extends WidgetCubit<LoginState> {
             StorageKeys.accessToken, request?.data?.token ?? '');
         await localeManager.setObject(
             StorageKeys.userInfoLogin, request?.data?.toJson() ?? {});
-        LocalStream.shared.setLoggedIn(true);
+        EventBus.shared.setLoggedIn(true);
         onSuccess();
       } else {
         final errorMessage = request?.message ?? '';
@@ -123,6 +124,7 @@ class LoginCubit extends WidgetCubit<LoginState> {
     required Function() onSuccess,
     required Function(String message) onError,
     Function(String)? onMaintenance,
+    bool isRetryingKeyPrivate = false,
   }) async {
     bool? isMaintenance = localeManager
             .loadSavedObject(StorageKeys.apiKeyPrivate, DataKeyPrivate.fromJson)
@@ -138,12 +140,14 @@ class LoginCubit extends WidgetCubit<LoginState> {
       onMaintenance?.call(isMaintenanceMsg ?? '');
       return;
     }
+
     try {
       final accountBase =
           '$apiKeyBase${phoneOrEmailSubject.value.trim()}${injector<AppConfig>().keyLogin ?? ''}$apiKeyBase${passwordSubject.value.trim()}$apiKeyBase';
       var accountBaseToBase64 = ToolHelper.stringToBase64Encode(accountBase);
       accountBaseToBase64 =
           ToolHelper.stringToBase64Encode(accountBaseToBase64);
+
       showEasyLoading();
       final data = {
         'account_base': accountBaseToBase64,
@@ -151,40 +155,49 @@ class LoginCubit extends WidgetCubit<LoginState> {
         'fcm_token': await getFcmToken(),
         'device_info': await ToolHelper.getDeviceInfo(),
       };
+
       if (kDebugMode) {
         print('data: ${data.toString()}');
       }
+
       final request = await fetchApi(
-          () => authenRepository.loginWithPhone(data),
-          showLoading: false);
+        () => authenRepository.loginWithPhone(data),
+        showLoading: false,
+      );
+
       if (request?.statusCode == ApiStatusCode.success) {
         await localeManager.setStringValue(
             StorageKeys.accessToken, request?.data?.token ?? '');
         await localeManager.setObject(
             StorageKeys.userInfoLogin, request?.data?.toJson() ?? {});
         HapticFeedback.lightImpact();
-        LocalStream.shared.setLoggedIn(true);
+        EventBus.shared.setLoggedIn(true);
         hideEasyLoading();
         onSuccess();
+      } else if (request?.statusCode == ApiStatusCode.invalidKeyPrivate) {
+        hideEasyLoading();
+
+        if (!isRetryingKeyPrivate) {
+          await callApiKeyPrivate();
+
+          await callApiLoginWithPhone(
+            onSuccess: onSuccess,
+            onError: onError,
+            onMaintenance: onMaintenance,
+            isRetryingKeyPrivate: true,
+          );
+        } else {
+          textErrorSubject.add(MyString.messageError);
+        }
       } else {
         final errorMessage = request?.message ?? '';
-        if (language == 'en') {
-          final translatedMessage =
-              await ToolHelper.translateText(errorMessage);
-          textErrorSubject.add(translatedMessage);
-          hideEasyLoading();
+        final messageToShow = (language == 'en')
+            ? await ToolHelper.translateText(errorMessage)
+            : (errorMessage.isNotEmpty ? errorMessage : MyString.messageError);
 
-          onError(translatedMessage);
-        } else {
-          textErrorSubject.add(errorMessage.isNotEmpty == true
-              ? errorMessage
-              : MyString.messageError);
-          hideEasyLoading();
-
-          onError(errorMessage.isNotEmpty == true
-              ? errorMessage
-              : MyString.messageError);
-        }
+        textErrorSubject.add(messageToShow);
+        hideEasyLoading();
+        onError(messageToShow);
       }
     } catch (e) {
       if (kDebugMode) {
@@ -192,8 +205,26 @@ class LoginCubit extends WidgetCubit<LoginState> {
       }
       textErrorSubject.add(MyString.messageError);
       hideEasyLoading();
-
       onError(MyString.messageError);
+    }
+  }
+
+  Future<void> callApiKeyPrivate() async {
+    final data = ApiKeyInput(
+        keyRandom: injector<AppConfig>().keyRandom ?? '',
+        appSunnyDay: injector<AppConfig>().appSunnyDay ?? '',
+        apiUserPassword: injector<AppConfig>().apiUserPassword ?? '',
+        apiUserId: injector<AppConfig>().apiUserId ?? '');
+    try {
+      final request = await authenRepository.keyPrivate(data);
+      if (request.statusCode == ApiStatusCode.success) {
+        if (request.data?.apiKeyPrivate?.isNotEmpty == true) {
+          localeManager.setObject(
+              StorageKeys.apiKeyPrivate, request.data!.toJson());
+        }
+      }
+    } catch (e) {
+      print(e);
     }
   }
 }

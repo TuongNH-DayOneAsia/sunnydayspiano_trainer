@@ -104,8 +104,8 @@ class MainPageState extends State<MainPage> with WidgetsBindingObserver {
   }
 
   void _setupLocalStreams() {
-    LocalStream.shared.goToScreenHistory = () => onItemTapped(3);
-    LocalStream.shared.refreshApiProfile =
+    EventBus.shared.goToScreenHistory = () => onItemTapped(3);
+    EventBus.shared.refreshApiProfile =
         () => _mainCubit.callApiGetProfileInformation();
   }
 
@@ -185,6 +185,8 @@ class MainPageState extends State<MainPage> with WidgetsBindingObserver {
                       profileScrollController: _scrollControllers[3]!),
                 ],
               ),
+              bottomNavigationBar: _buildBottomNavigation(state),
+
               // bottomNavigationBar: AnimatedContainer(
               //   duration: _animDuration,
               //   height: _isBottomNavVisible ? kBottomNavigationBarHeight + MediaQuery.of(context).padding.bottom : 0,
@@ -195,7 +197,6 @@ class MainPageState extends State<MainPage> with WidgetsBindingObserver {
               //   ),
               // ),
 
-              bottomNavigationBar: _buildBottomNavigation(state),
             );
           },
         ),

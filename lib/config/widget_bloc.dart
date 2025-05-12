@@ -293,7 +293,7 @@ abstract class WidgetBloc<Event, State> extends Bloc<Event, State> {
     try {
       await localeManager.clearDataLocalLogout();
       myRouter.go(LoginScreen.route);
-      LocalStream.shared.setLoggedIn(false);
+      EventBus.shared.setLoggedIn(false);
       print('clearCacheGoToLogin');
       callApiKeyPrivate();
     } finally {

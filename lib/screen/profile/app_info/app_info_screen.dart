@@ -212,7 +212,6 @@ class AppInfoOptionsWidget extends StatelessWidget {
               style: TextStyle(
                 color: MyColors.darkGrayColor,
                 fontSize: 14.sp,
-                fontFamily: 'Be Vietnam Pro',
                 fontWeight: FontWeight.w400,
               ),
             ),

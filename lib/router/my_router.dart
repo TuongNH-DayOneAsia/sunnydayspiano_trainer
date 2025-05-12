@@ -52,6 +52,7 @@ import 'package:myutils/data/network/model/output/booking_11/coaches_output.dart
 import 'package:myutils/data/network/model/output/booking_11/contracts_output.dart';
 import 'package:myutils/data/network/model/output/contract_output.dart';
 import 'package:myutils/data/network/model/output/list_class_output.dart';
+import 'package:myutils/data/network/model/output/menus_in_home_output.dart';
 import 'package:myutils/data/network/model/output/user_output.dart';
 
 import '../screen/authen/apple_testing/confirm/apple_confirm_password_screen.dart';
@@ -351,8 +352,8 @@ extension DayoneBookingRouter on AppRouter {
         name: BookingPracticeListScreen
             .route, //Used for pushNamed and pass params
         builder: (context, state) {
-          final keyType = state.extra as String?;
-          return BookingPracticeListScreen(keyType: keyType);
+          final data = state.extra as DataMenuV3?;
+          return BookingPracticeListScreen(data: data);
         },
       ),
       GoRoute(
@@ -364,9 +365,8 @@ extension DayoneBookingRouter on AppRouter {
               state.extra as Map<String, dynamic>;
 
           String? title = extra['title'] as String?;
-          DataContractV5.Data data = extra['data'] as DataContractV5.Data;
+          DataContractV5.Data? data = extra['data'] as DataContractV5.Data?;
           String? messageEmpty = extra['message_empty'] as String?;
-
           return ContractsScreen(
             titleAppbar: title,
             data: data,

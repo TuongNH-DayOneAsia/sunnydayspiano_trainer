@@ -18,7 +18,11 @@ class BookingClassTypesV5Output {
     statusCode = json['status_code'];
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    if (json['data'] != null && json['data'] is Map) {
+      data = Data.fromJson(json['data']);
+    } else {
+      data = null;
+    }
   }
   int? statusCode;
   String? status;
@@ -144,6 +148,7 @@ class Items {
     this.messages,
     this.statusName,
     this.position,
+    this.messageBlock
   });
 
   Items.fromJson(dynamic json) {
@@ -158,6 +163,7 @@ class Items {
     messages = json['messages'];
     statusName = json['status_name'];
     position = json['position'];
+    messageBlock = json['message_block'];
   }
   String? productName;
   String? slugContract;
@@ -170,6 +176,7 @@ class Items {
   String? messages;
   String? statusName;
   int? position;
+  String? messageBlock;
   Items copyWith({
     String? productName,
     String? slugContract,
@@ -182,6 +189,7 @@ class Items {
     String? messages,
     String? statusName,
     int? position,
+    String? messageBlock
   }) =>
       Items(
         productName: productName ?? this.productName,
@@ -195,6 +203,7 @@ class Items {
         messages: messages ?? this.messages,
         statusName: statusName ?? this.statusName,
         position: position ?? this.position,
+        messageBlock: messageBlock ?? this.messageBlock
       );
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -209,6 +218,7 @@ class Items {
     map['messages'] = messages;
     map['status_name'] = statusName;
     map['position'] = position;
+    map['messages_block'] = messageBlock;
     return map;
   }
   Color colorStatus() {

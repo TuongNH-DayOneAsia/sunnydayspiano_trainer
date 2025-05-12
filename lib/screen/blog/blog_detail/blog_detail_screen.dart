@@ -95,7 +95,6 @@ class BlogDetailScreen extends BaseStatelessScreenV2 {
                       style: TextStyle(
                         color: const Color(0xFF6A6A6A),
                         fontSize: 12.sp,
-                        fontFamily: 'Be Vietnam Pro',
                         fontWeight: FontWeight.w400,
                       ),
                     ),
@@ -119,9 +118,7 @@ class BlogDetailScreen extends BaseStatelessScreenV2 {
                         style: TextStyle(
                           color: MyColors.mainColor,
                           fontSize: 14.sp,
-                          fontFamily: 'Be Vietnam Pro',
                           fontWeight: FontWeight.w500,
-                          height: 0,
                         ),
                       ),
                     ),
@@ -133,7 +130,6 @@ class BlogDetailScreen extends BaseStatelessScreenV2 {
                     style: TextStyle(
                       color: const Color(0xFF2A2A2A),
                       fontSize: 18.sp,
-                      fontFamily: 'Be Vietnam Pro',
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -145,8 +141,6 @@ class BlogDetailScreen extends BaseStatelessScreenV2 {
                     style: TextStyle(
                       color: const Color(0xFF2A2A2A),
                       fontSize: 14.sp,
-                      fontFamily: 'Be Vietnam Pro',
-                      height: 0,
                     ),
                   ),
                   SizedBox(
@@ -188,7 +182,6 @@ class BlogDetailScreen extends BaseStatelessScreenV2 {
                     style: TextStyle(
                       color: const Color(0xFF6A6A6A),
                       fontSize: 12.sp,
-                      fontFamily: 'Be Vietnam Pro',
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -212,9 +205,7 @@ class BlogDetailScreen extends BaseStatelessScreenV2 {
                       style: TextStyle(
                         color: MyColors.mainColor,
                         fontSize: 14.sp,
-                        fontFamily: 'Be Vietnam Pro',
                         fontWeight: FontWeight.w500,
-                        height: 0,
                       ),
                     ),
                   ),
@@ -226,7 +217,6 @@ class BlogDetailScreen extends BaseStatelessScreenV2 {
                   style: TextStyle(
                     color: const Color(0xFF2A2A2A),
                     fontSize: 18.sp,
-                    fontFamily: 'Be Vietnam Pro',
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -238,8 +228,6 @@ class BlogDetailScreen extends BaseStatelessScreenV2 {
                   style: TextStyle(
                     color: const Color(0xFF2A2A2A),
                     fontSize: 14.sp,
-                    fontFamily: 'Be Vietnam Pro',
-                    height: 0,
                   ),
                 ),
                 SizedBox(

@@ -31,7 +31,7 @@ class _RemindBookingWidgetState extends State<RemindBookingWidget> {
     // TODO: implement initState
     super.initState();
 
-    LocalStream.shared.refreshDataInHome = () {
+    EventBus.shared.refreshDataInHome = () {
       context.read<HomeCubit>().remindBooking();
       context.read<HomeCubit>().menusInHome();
       // context.read<HomeCubit>().bookingClassTypesV3();
@@ -41,11 +41,10 @@ class _RemindBookingWidgetState extends State<RemindBookingWidget> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<String>(
-        stream: LocalStream.shared.localeStream,
+        stream: EventBus.shared.localeStream,
         builder: (context, snapshot) {
           return BlocBuilder<HomeCubit, HomeState>(
             builder: (context, state) {
-
               if(state.remindBookingOutput== null){
                   return buildShimmerLoadingEffect();
               } else if (state.remindBookingOutput?.data?.isEmpty ?? false) {

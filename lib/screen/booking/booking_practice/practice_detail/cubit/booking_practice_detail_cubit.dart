@@ -88,10 +88,10 @@ class BookingPracticeDetailCubit extends WidgetCubit<BookingPracticeDetailState>
         showLoading: true,
       );
       if (bookingResult?.statusCode == ApiStatusCode.success) {
-        LocalStream.shared.handleAction(refreshAction);
+        EventBus.shared.handleAction(refreshAction);
         onSuccess();
       } else if (bookingResult?.statusCode == ApiStatusCode.blockBooking) {
-        LocalStream.shared.handleAction(refreshAction);
+        EventBus.shared.handleAction(refreshAction);
         onBookingBlock(bookingResult?.message ?? '');
         callApiDetail();
       } else {

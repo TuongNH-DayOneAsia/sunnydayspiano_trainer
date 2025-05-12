@@ -14,10 +14,10 @@ class BaseOutput {
 
   factory BaseOutput.fromJson(Map<String, dynamic>? json) {
     return BaseOutput(
-      statusCode: json?['statusCode'] as int?,
+      statusCode: json?['status_code'] as int?,
       message: json?['message'] as String?,
       status: json?['status'] as String?,
-      errors: json?['errors'] as List<String>?,
+      // errors: json?['errors'] as List<String>?,
 
     );
   }

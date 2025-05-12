@@ -13,6 +13,8 @@ class ApiStatusCode {
   static const int blockBooking = 429;
   static const int requiredFieldMissing = 422;
   static const int requiredForeUpdate = 426;
+  //Invalid key private
+  static const int invalidKeyPrivate = 402;
 }
 class ApiConstant {
   static const token = 'token';

@@ -16,6 +16,7 @@ import 'package:myutils/base/bloc/local_cubit.dart';
 import 'package:myutils/base/bloc/app_cubit.dart';
 import 'package:myutils/base/bloc/app_state.dart';
 import 'package:myutils/helpers/extension/colors_extension.dart';
+import 'package:myutils/utils/widgets/custom_error_widget.dart';
 import '../data/configuration/theme_config/my_app_theme.dart';
 final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
@@ -122,11 +123,16 @@ class _MyBaseAppState extends State<MyBaseApp> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-        designSize: const Size(390, 844),
-        builder: (context, child) => MaterialApp.router(
-        builder: (context, child) => GlobalScaffold(
-          child: EasyLoading.init()(context, child),
-        ),
+      designSize: const Size(390, 844),
+      builder: (context, child) => MaterialApp.router(
+        builder: (context, child) {
+          ErrorWidget.builder = (errorDetails) {
+            return const CustomFlutterErrorWidget();
+          };
+          return GlobalScaffold(
+            child: EasyLoading.init()(context, child),
+          );
+        },
         routeInformationParser: widget.router.routeInformationParser,
         routeInformationProvider: widget.router.routeInformationProvider,
         routerDelegate: widget.router.routerDelegate,

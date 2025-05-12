@@ -77,7 +77,6 @@ class AppCubit extends WidgetCubit<AppState> {
   }
 
   Future<void> callApiKeyPrivate() async {
-    injector<AppConfig>().baseUrl ?? '';
     final data = ApiKeyInput(
         keyRandom: injector<AppConfig>().keyRandom ?? '',
         appSunnyDay: injector<AppConfig>().appSunnyDay ?? '',

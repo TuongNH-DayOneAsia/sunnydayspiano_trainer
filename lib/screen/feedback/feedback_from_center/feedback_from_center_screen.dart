@@ -62,7 +62,6 @@ class FeedbackFromCenterWidget extends BaseStatelessScreenV2 {
                       style: TextStyle(
                         color: MyColors.lightGrayColor2,
                         fontSize: 14,
-                        fontFamily: 'Be Vietnam Pro',
                         fontWeight: FontWeight.w400,
                       ),
                     ),

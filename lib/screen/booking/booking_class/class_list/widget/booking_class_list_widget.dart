@@ -166,7 +166,6 @@ class DataEmptyWidget extends StatelessWidget {
               style: TextStyle(
                 color: const Color(0xFF8D8D8D),
                 fontSize: 14.sp,
-                fontFamily: 'Be Vietnam Pro',
                 fontWeight: FontWeight.w400,
               ),
             ),

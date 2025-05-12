@@ -19,6 +19,7 @@ import 'package:myutils/data/network/model/output/currrent_week_output.dart';
 import 'package:myutils/data/network/model/output/durations_output.dart';
 import 'package:myutils/data/network/model/output/list_class_output.dart';
 import 'package:myutils/data/network/model/output/list_piano_output.dart';
+import 'package:myutils/data/network/model/output/menus_in_home_output.dart';
 import 'package:myutils/data/network/network_manager.dart';
 import 'package:myutils/data/repositories/authen_repository.dart';
 import 'package:myutils/data/repositories/booking_repository.dart';
@@ -30,10 +31,10 @@ part 'booking_practice_list_state.dart';
 /// \[PracticeListCubit\] manages the state for the practice list screen.
 class BookingPracticeListCubit extends WidgetCubit<BookingPracticeListState> {
   /// The type of key used for booking.
-  final String? keyType;
+  final DataMenuV3? data;
 
   /// Creates a new instance of \[PracticeListCubit\].
-  BookingPracticeListCubit({this.keyType}) : super(widgetState: BookingPracticeListState());
+  BookingPracticeListCubit({this.data}) : super(widgetState: BookingPracticeListState());
 
   /// Repository for booking-related operations.
   final BookingRepository _bookingRepository = injector();
@@ -106,7 +107,7 @@ class BookingPracticeListCubit extends WidgetCubit<BookingPracticeListState> {
   callApiBannerClass() async {
     try {
       final map = {
-        'key': keyType ?? '',
+        'key': this.data?.key ?? '',
       };
 
       final bannerClassType = await fetchApi(
@@ -137,10 +138,6 @@ class BookingPracticeListCubit extends WidgetCubit<BookingPracticeListState> {
     required Function(String) onBookingBlock,
   }) async {
     showEasyLoading();
-    if (kDebugMode) {
-      print(
-          'state.listBookingInput: ${state.listBookingInput.toJsonBookPractice()}');
-    }
     try {
       final bookingResult = await fetchApi(
         () => _bookingRepository
@@ -157,7 +154,7 @@ class BookingPracticeListCubit extends WidgetCubit<BookingPracticeListState> {
           await _translateBookingData(data);
         }
         await listPiano(state.listBookingInput.startTime ?? '');
-        LocalStream.shared.handleAction(RefreshAction.refreshPracticeList);
+        EventBus.shared.handleAction(RefreshAction.refreshPracticeList);
         emit(state.copyWith(
             listBookingInput:
                 state.listBookingInput.copyWith(instrumentCode: '')));
@@ -194,7 +191,8 @@ class BookingPracticeListCubit extends WidgetCubit<BookingPracticeListState> {
 
     try {
       final data = {
-        'key': keyType ?? '',
+        'key': this.data?.key ?? '',
+        // 'slug_contract': this.data?.slugContract ?? '',
       };
       final results = await Future.wait([
         fetchApi(() => _bookingRepository.branchesV2(data), showLoading: false),

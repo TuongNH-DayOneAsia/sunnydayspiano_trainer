@@ -258,7 +258,6 @@ class _StudentInfoForm extends StatelessWidget {
                       style:  TextStyle(
                         color: const Color(0xFF9B9B9B),
                         fontSize: 12.sp,
-                        fontFamily: 'Be Vietnam Pro',
                         fontWeight: FontWeight.w400,
                       ),
                     ),

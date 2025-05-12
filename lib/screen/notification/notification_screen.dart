@@ -103,12 +103,11 @@ class ReminderList extends BaseStatelessScreenV2 {
               },
             ),
             const SizedBox(width: 6),
-            const Text(
+             Text(
               'Chỉ chưa đọc',
               style: TextStyle(
                 color: Color(0xFF3B3B3B),
-                fontSize: 12,
-                fontFamily: 'Be Vietnam Pro',
+                fontSize: 12.sp,
               ),
             ),
           ],
@@ -297,7 +296,7 @@ class _NotificationListViewState extends State<NotificationListView> {
       context.read<NotificationsCubit>().seenNotification(
             slug: item.slug ?? '',
             onSuccess: () {
-              LocalStream.shared.refreshApiProfile();
+              EventBus.shared.refreshApiProfile();
               context
                   .read<NotificationsCubit>()
                   .updateNotificationStatus(item.slug ?? '');

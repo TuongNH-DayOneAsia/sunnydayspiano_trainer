@@ -70,7 +70,7 @@ class _BuildBodyState extends State<_BuildBody> {
   void initState() {
     super.initState();
     _scrollController = widget.historyScrollController ?? ScrollController();
-    LocalStream.shared.refreshHistory = () {
+    EventBus.shared.refreshHistory = () {
       print('refreshHistory');
       context.read<BookingHistoryCubit>().filter(showLoading: false);
       _scrollToTop(
