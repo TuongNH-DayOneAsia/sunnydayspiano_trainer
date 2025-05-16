@@ -226,9 +226,9 @@ class MainPageState extends State<MainPage> with WidgetsBindingObserver {
   List<BottomNavigationBarItem> _buildNavItems() {
     return [
       _buildNavItem("home", 0, 'global.home'.tr()),
-      _buildNavItem("write", 1, 'Bài viết'),
+      _buildNavItem("write", 1, 'home.blog'.tr()),
       const BottomNavigationBarItem(icon: SizedBox.shrink(), label: ''),
-      _buildNavItem("clock", 2, 'Lịch sử'),
+      _buildNavItem("clock", 2, 'home.history'.tr()),
       _buildNavItem("user", 3, 'global.profile'.tr()),
     ];
   }

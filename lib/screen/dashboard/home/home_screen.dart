@@ -150,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen>
     return <Widget>[
       SizedBox(height: 30.h),
       BuildSectionTitle(
-        text: 'Bài viết'.tr(),
+        text: 'home.blog'.tr(),
         // showMoreWidget: _buildShowMoreWidget(),
       ),
       _buildTabbedPage(),

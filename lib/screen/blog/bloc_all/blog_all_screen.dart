@@ -12,6 +12,7 @@ import 'package:myutils/helpers/extension/colors_extension.dart';
 import 'package:myutils/helpers/extension/image_extension.dart';
 import 'package:myutils/utils/tab/my_tab_bar.dart';
 import 'package:myutils/utils/widgets/base_state_less_screen_v2.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../dashboard/home/widget/section_title_widget.dart';
 import 'cubit/blog_all_cubit.dart';
@@ -27,7 +28,7 @@ class BlogAllScreen extends BaseStatelessScreenV2 {
   const BlogAllScreen({super.key, super.automaticallyImplyLeading = false, required this.blogScrollController});
 
   @override
-  String? get title => 'Bài viết';
+  String? get title => 'home.blog'.tr();
 
   @override
   Color? get backgroundColor => MyColors.backgroundColor;
@@ -41,7 +42,7 @@ class BlogAllScreen extends BaseStatelessScreenV2 {
         if (state.isInitialLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state.promotions?.isEmpty == true && state.listBlog?.isEmpty == true) {
-          return const Center(child: Text('Không có dữ liệu'));
+          return Center(child: Text('error.noData'.tr()));
         }
         return _BuildContentWidget(blogScrollController: blogScrollController);
       },
@@ -122,12 +123,12 @@ class _BuildContentWidgetState extends State<_BuildContentWidget> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       if (state.promotions?.isNotEmpty == true) ...[
-                        const BuildSectionTitle(text: 'Thông báo chương trình'),
+                        BuildSectionTitle(text: 'home.programNotification'.tr()),
                         SizedBox(height: 14.h),
                         const ListPromotionWidget(),
                         SizedBox(height: 20.h),
                       ],
-                      const BuildSectionTitle(text: 'Bài viết'),
+                      BuildSectionTitle(text: 'home.blog'.tr()),
                       SizedBox(height: 14.h),
                       _buildDivider(),
                       SizedBox(height: 14.h),

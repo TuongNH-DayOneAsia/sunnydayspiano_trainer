@@ -23,7 +23,7 @@ class InformationContractScreen extends BaseStatelessScreenV2 {
   bool reloadAvatar = false;
 
   @override
-  String get title => 'Thông tin tài khoản'.tr();
+  String get title => 'profile.infoAccount'.tr();
 
   @override
   void onBack({required BuildContext context, bool? value}) {
@@ -60,15 +60,15 @@ class InformationContractScreen extends BaseStatelessScreenV2 {
                                 value: state.userOutput?.data?.studentCode ??
                                     '---'),
                             // UserInfoItem('Chi nhánh đăng ký'.tr(), value: state.userOutput?.data?.branches?.join(', ') ?? '---'),
-                            UserInfoItem('Chi nhánh đăng ký'.tr(),
+                            UserInfoItem('profile.registerBrand'.tr(),
                                 value: state.userOutput?.data?.branch ?? '---'),
                             UserInfoItem('profile.contractSigningDate'.tr(),
                                 value: state.userOutput?.data?.dateContract ??
                                     '---'),
-                            UserInfoItem('Ngày bắt đầu',
+                            UserInfoItem('profile.start_date'.tr(),
                                 value: state.userOutput?.data?.contractStartDate ??
                                     '---'),
-                            UserInfoItem('Ngày kết thúc',
+                            UserInfoItem('profile.end_date'.tr(),
                                 value: state.userOutput?.data?.contractEndDate ??
                                     '---'),
                             // UserInfoItem('profile.timeStart'.tr(), value: state.userOutput?.data?.dateStart ?? '---'),

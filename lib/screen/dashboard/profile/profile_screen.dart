@@ -16,8 +16,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myutils/config/local_stream.dart';
 import 'package:myutils/helpers/extension/colors_extension.dart';
 import 'package:myutils/helpers/extension/icon_extension.dart';
+import 'package:myutils/helpers/tools/change_language.dart';
 import 'package:myutils/helpers/tools/tool_helper.dart';
 import 'package:myutils/utils/dimens.dart';
 import 'package:myutils/utils/popup/my_popup_message.dart';
@@ -207,20 +209,20 @@ class _Body extends BaseStatelessScreenV2 {
                         //   },
                         // ),
 
-                        // ListTitleWidget(
-                        //   title: 'profile.changeLanguage'.tr(),
-                        //   icon: 'profile/language.svg',
-                        //   showArrow: true,
-                        //   onTap: () {
-                        //     showSelectLanguage(
-                        //         pageContext: context,
-                        //         reloadLanguage: () {
-                        //           LocalStream.shared.refreshDataInHome();
-                        //           LocalStream.shared.refreshBannerInHome();
-                        //           reloadLanguage();
-                        //         });
-                        //   },
-                        // ),
+                        ListTitleWidget(
+                          title: 'profile.changeLanguage'.tr(),
+                          icon: 'profile/language.svg',
+                          showArrow: true,
+                          onTap: () {
+                            showSelectLanguage(
+                                pageContext: context,
+                                reloadLanguage: () {
+                                  EventBus.shared.refreshDataInHome();
+                                  EventBus.shared.refreshBannerInHome();
+                                  reloadLanguage();
+                                });
+                          },
+                        ),
                       ],
                     ),
                     SectionWidget(

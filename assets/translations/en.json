@@ -48,8 +48,10 @@
     "timeStart": "Activation date",
     "timeEnd": "End Date",
     "contractSigningDate": "Contract signing date",
-    "infoAccount": "Account Information"
-
+    "infoAccount": "Account Information",
+    "registerBrand": "Register Brand",
+    "start_date": "Start Date",
+    "end_date": "End Date"
   },
   "authentication": {
     "login": "Login",
@@ -108,7 +110,10 @@
     "upcomingReminder": "Upcoming Reminder",
     "viewDetails": "View Details",
     "centerReview": "Center Review",
-    "bookingOption" : "Booking Option"
+    "bookingOption" : "Booking Option",
+    "blog": "Blog",
+    "history": "History",
+    "programNotification": "Program Notification"
 
   },
   "bookingClass": {
@@ -153,10 +158,19 @@
     "selectDuration": "Select duration",
     "minutes": "minutes",
     "bookingCode": "Booking code",
-    "pleaseSelectBranch": "Please select a branch!"
+    "pleaseSelectBranch": "Please select a branch!",
+    "classInfoNotAvailable": "Class Info Not Available!",
+    "classAttended": "Class Attended",
+    "session": "Session",
+    "classAbsent": "Class Absent",
+    "maximum": "Maximum",
+    "times": "times",
+    "month": "month",
+    "noBookingData": "No Booking Data"
   },
   "error": {
-    "noInformation": "No information"
+    "noInformation": "No information",
+    "noData": "No Data"
   },
   "bookingPractice": {
     "pleaseSelectRoom": "Please select a time & branch to view the list of piano practice rooms!",
@@ -170,5 +184,11 @@
     "reset": "Reset",
     "time": "Time",
     "codePiano": "Piano code"
+  },
+  "booking11": {
+    "selectContract11": "Select Contract 1-1"
+  },
+  "statistic": {
+    "completeBooking": "Complete Booking"
   }
 }

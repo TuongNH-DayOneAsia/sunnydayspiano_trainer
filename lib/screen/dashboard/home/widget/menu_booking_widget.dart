@@ -186,7 +186,7 @@ class _MenuBookingWidgetState extends State<MenuBookingWidget> {
         }
         // Handle other booking types (1:1)
         context.push(ContractsScreen.route, extra: {
-          'title': 'Chọn hợp đồng lớp 1:1',
+          'title': 'booking11.selectContract11'.tr(),
           'data': state.oneOneContract?.data,
           'message_empty': state.oneOneContract?.data?.messages ?? ''
         });

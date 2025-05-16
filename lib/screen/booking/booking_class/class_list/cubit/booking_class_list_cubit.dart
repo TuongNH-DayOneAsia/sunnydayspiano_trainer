@@ -15,6 +15,7 @@ import 'package:myutils/data/network/model/output/list_class_output.dart';
 import 'package:myutils/data/repositories/booking_repository.dart';
 import 'package:myutils/helpers/extension/string_extension.dart';
 import 'package:myutils/helpers/tools/tool_helper.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'booking_class_list_state.dart';
 
@@ -52,7 +53,7 @@ class BookingClassListCubit extends WidgetCubit<BookingClassListState> {
       return branches.first.message ?? defaultMessage;
     }
 
-    return state.listBookingOutput?.message ?? 'Chưa có thông tin buổi học!';
+    return state.listBookingOutput?.message ?? 'bookingClass.classInfoNotAvailable'.tr();
   }
 
   Future<void> callApiClassLessonRequestChange(

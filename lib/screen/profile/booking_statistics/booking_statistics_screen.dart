@@ -110,7 +110,7 @@ class _BuildBodyV1State extends State<_BuildBodyV1> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Tháng ${state.dateSelected}',
+                    'bookingClass.month ${state.dateSelected}'.tr(),
                     style: TextStyle(
                       color: MyColors.darkGrayColor,
                       fontSize: 16.sp,
@@ -154,7 +154,7 @@ class _BuildBodyV1State extends State<_BuildBodyV1> {
           MyAppIcon.iconNamedCommon(iconName: 'calendar-empty.svg'),
           SizedBox(height: 18.h),
           Text(
-            'Không có dữ liệu đặt lịch',
+            'bookingClass.noBookingData'.tr(),
             textAlign: TextAlign.center,
             style: TextStyle(
               color: const Color(0xFF6A6A6A),
@@ -198,7 +198,7 @@ class _BuildBodyV1State extends State<_BuildBodyV1> {
     return Align(
       alignment: Alignment.centerLeft,
       child: Text(
-        'Lịch đặt thành công',
+        'statistic.completeBooking'.tr(),
         style: TextStyle(
           color: const Color(0xFF3B3B3B),
           fontSize: 16.sp,
@@ -216,7 +216,7 @@ class _BuildBodyV1State extends State<_BuildBodyV1> {
           child: AttendanceStatBox(
             icon: Icons.done_outline,
             count: state.statisticsOutput?.data?.booked ?? 0,
-            label: 'Đã đặt',
+            label: 'bookingClass.booked'.tr(),
             subLabel: '',
             color: MyColors.mainColor,
             urlPath: 'booking/success.svg',
@@ -227,8 +227,8 @@ class _BuildBodyV1State extends State<_BuildBodyV1> {
           child: AttendanceStatBox(
             icon: Icons.check_circle_outline,
             count: state.statisticsOutput?.data?.attended ?? 0,
-            label: 'Đã đến lớp',
-            subLabel: '(Buổi)',
+            label: 'bookingClass.classAttended'.tr(),
+            subLabel: '(bookingClass.session)'.tr(),
             color: MyColors.emeraldGreenColor,
             urlPath: 'booking/heart.svg',
           ),
@@ -237,8 +237,8 @@ class _BuildBodyV1State extends State<_BuildBodyV1> {
           child: AttendanceStatBox(
             icon: Icons.cancel_outlined,
             count: state.statisticsOutput?.data?.late ?? 0,
-            label: 'Không đến lớp',
-            subLabel: '(Tối đa ${state.statisticsOutput?.data?.notYetClass ?? 0} lần)',
+            label: 'bookingClass.classAbsent'.tr(),
+            subLabel: '(bookingClass.maximum ${state.statisticsOutput?.data?.notYetClass ?? 0} bookingClass.times)'.tr(),
             color: Colors.red,
             urlPath: 'booking/cancel.svg',
           ),
@@ -258,7 +258,7 @@ class _BuildBodyV1State extends State<_BuildBodyV1> {
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,
               border: Border.all(color: MyColors.mainColor, width: 1),
-              text: 'Lịch sử đặt lịch',
+              text: 'global.history'.tr(),
               colorText: MyColors.mainColor,
               height: 38.h,
               onPressed: (_) {
@@ -348,7 +348,7 @@ class _BuildBodyV2State extends State<_BuildBodyV2> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    state.dateSelected?.isNotEmpty == true ? 'Tháng ${state.dateSelected}' : '',
+                    state.dateSelected?.isNotEmpty == true ? 'bookingClass.month ${state.dateSelected}'.tr() : '',
                     style: TextStyle(
                       color: MyColors.darkGrayColor,
                       fontSize: 16.sp,
@@ -400,7 +400,7 @@ class _BuildBodyV2State extends State<_BuildBodyV2> {
             MyAppIcon.iconNamedCommon(iconName: 'calendar-empty.svg'),
             SizedBox(height: 18.h),
             Text(
-              'Không có dữ liệu',
+              'error.noData'.tr(),
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: const Color(0xFF6A6A6A),
@@ -447,7 +447,7 @@ class _BuildBodyV2State extends State<_BuildBodyV2> {
     return Align(
       alignment: Alignment.centerLeft,
       child: Text(
-        'Lịch đặt thành công',
+        'statistic.completeBooking'.tr(),
         style: TextStyle(
           color: const Color(0xFF3B3B3B),
           fontSize: 16.sp,
@@ -465,7 +465,7 @@ class _BuildBodyV2State extends State<_BuildBodyV2> {
           child: AttendanceStatBox(
             icon: Icons.done_outline,
             count: state.statisticsOutput?.data?.booked ?? 0,
-            label: 'Đã đặt',
+            label: 'bookingClass.booked'.tr(),
             subLabel: '',
             color: MyColors.mainColor,
             urlPath: 'booking/success.svg',
@@ -476,8 +476,8 @@ class _BuildBodyV2State extends State<_BuildBodyV2> {
           child: AttendanceStatBox(
             icon: Icons.check_circle_outline,
             count: state.statisticsOutput?.data?.attended ?? 0,
-            label: 'Đã đến lớp',
-            subLabel: '(Buổi)',
+            label: 'bookingClass.classAttended'.tr(),
+            subLabel: '(bookingClass.session)'.tr(),
             color: MyColors.emeraldGreenColor,
             urlPath: 'booking/heart.svg',
           ),
@@ -486,11 +486,11 @@ class _BuildBodyV2State extends State<_BuildBodyV2> {
           child: AttendanceStatBox(
             icon: Icons.cancel_outlined,
             count: state.statisticsOutput?.data?.late ?? 0,
-            label: 'Không đến lớp',
+            label: 'bookingClass.classAbsent'.tr(),
             // subLabel: '(Tối đa ${state.statisticsOutput?.data?.notYetClass ?? 0} lần)',
             subLabel: widget.classType?.name == ClassType.CLASS.name
                 ? ''
-                : '(Tối đa ${state.statisticsOutput?.data?.notYetClass ?? 0} lần)',
+                : '(bookingClass.maximum ${state.statisticsOutput?.data?.notYetClass ?? 0} bookingClass.times)'.tr(),
             color: Colors.red,
             urlPath: 'booking/cancel.svg',
           ),
@@ -510,7 +510,7 @@ class _BuildBodyV2State extends State<_BuildBodyV2> {
               fontSize: 14.sp,
               fontWeight: FontWeight.w400,
               border: Border.all(color: MyColors.mainColor, width: 1),
-              text: 'Lịch sử đặt lịch',
+              text: 'global.history'.tr(),
               colorText: MyColors.mainColor,
               height: 38.h,
               onPressed: (_) {

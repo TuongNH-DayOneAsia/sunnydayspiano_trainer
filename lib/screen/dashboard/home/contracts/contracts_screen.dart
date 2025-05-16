@@ -22,7 +22,7 @@ class ContractsScreen extends BaseStatelessScreenV2 {
   static const String route = '/contracts';
 
   @override
-  String get title => titleAppbar ?? 'Chọn hợp đồng lớp 1-1';
+  String get title => titleAppbar ?? 'booking11.selectContract11'.tr();
 
   const ContractsScreen(
       {super.key, this.titleAppbar, this.data, this.messageEmpty});

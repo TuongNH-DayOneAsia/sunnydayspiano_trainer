@@ -48,7 +48,10 @@
     "timeStart": "Ngày kích hoạt",
     "timeEnd": "Ngày kết thúc",
     "contractSigningDate": "Ngày ký hợp đồng",
-    "infoAccount": "Thông tin tài khoản"
+    "infoAccount": "Thông tin tài khoản",
+    "registerBrand": "Chi nhánh đăng ký",
+    "start_date": "Ngày bắt đầu",
+    "end_date": "Ngày kết thúc"
   },
   "authentication": {
     "login": "Đăng nhập",
@@ -111,7 +114,11 @@
     "upcomingReminder": "Nhắc lịch sắp đến",
     "viewDetails": "Xem chi tiết",
     "centerReview": "Đánh giá trung tâm",
-    "bookingOption" : "Tùy chọn đặt lịch"
+    "bookingOption" : "Tùy chọn đặt lịch",
+    "blog": "Bài viết",
+    "history": "Lịch sử",
+    "programNotification": "Thông báo chương trình"
+
   },
   "bookingClass": {
     "bookClass": "Đặt lịch lớp nhóm",
@@ -155,13 +162,20 @@
     "selectDuration": "Chọn thời lượng",
     "minutes": "phút",
     "bookingCode": "Mã đặt chỗ",
-    "pleaseSelectBranch": "Vui lòng chọn chi nhánh!"
-
-
+    "pleaseSelectBranch": "Vui lòng chọn chi nhánh!",
+    "classInfoNotAvailable": "Chưa có thông tin buổi học!",
+    "classAttended": "Đã đến lớp",
+    "session": "Buổi",
+    "classAbsent": "Không đến lớp",
+    "maximum": "Tối đa",
+    "times": "lần",
+    "month": "Tháng",
+    "noBookingData": "Không có dữ liệu đặt lịch"
 
   },
   "error": {
-    "noInformation": "Không có thông tin"
+    "noInformation": "Không có thông tin",
+    "noData": "Không có dữ liệu"
   },
   "bookingPractice" : {
     "pleaseSelectRoom": "Mời bạn chọn thời gian & chi nhánh để xem danh sách phòng luyện đàn!",
@@ -177,5 +191,11 @@
     "codePiano": "Mã đàn"
 
 
+  },
+  "booking11": {
+    "selectContract11": "Chọn hợp đồng lớp 1-1"
+  },
+  "statistic": {
+    "completeBooking": "Lịch đặt thành công"
   }
 }
